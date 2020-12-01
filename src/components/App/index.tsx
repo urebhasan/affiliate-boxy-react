@@ -2,12 +2,12 @@ import React from 'react';
 import './App.css';
 
 import Amplify, { Auth } from 'aws-amplify';
-import awsConfig from './aws-exports';
+import awsConfig from '../../aws-exports';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
 import AWS from 'aws-sdk';
-import database from './utils/database';
+import database from '../../utils/database';
 
 type User = { [key: string]: any } | undefined;
 
