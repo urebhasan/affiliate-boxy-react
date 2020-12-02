@@ -1,14 +1,15 @@
 import rfdc from 'rfdc';
 import { diff } from 'deep-diff';
-
 import AWS from 'aws-sdk';
+
 const TABLE_NAME = 'affiliate-boxy-users';
+const clone = rfdc();
 
 class Database {
     private _DynamoDB?: AWS.DynamoDB.DocumentClient;
     private username?: string;
     private cloudData?: { [key: string]: any };
-    private data?: { [key: string]: any };
+    public data!: { [key: string]: any };
 
     get DynamoDB() {
         if (!this._DynamoDB) this._DynamoDB = new AWS.DynamoDB.DocumentClient();
@@ -21,9 +22,9 @@ class Database {
             TableName: TABLE_NAME,
             Key: { id: this.username }
         };
-        this.data = (await this.DynamoDB.get(params).promise()).Item;
+        this.data = (await this.DynamoDB.get(params).promise()).Item!;
         if (this.data === undefined) this.data = await this.createEntry();
-        this.cloudData = rfdc(this.data);
+        this.cloudData = clone(this.data);
     }
 
     async createEntry() {

@@ -20,11 +20,16 @@ function App() {
   React.useEffect(() => {
     return onAuthUIStateChange(async (authState, user: User) => {
       if (authState === AuthState.SignedIn) {
-        //const credentials = await Auth.currentUserCredentials();
-        //AWS.config.region = 'us-east-1';
-        //AWS.config.credentials = credentials;
-        //await database.loadData(user?.username);
+        AWS.config.region = 'us-east-1';
+        AWS.config.credentials = await Auth.currentCredentials();
+        /*AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: 'us-east-1:88e9ef87-bf66-4cca-8444-d4dae4ffb582',
+          Logins: {
+            'cognito-idp.us-east-1.amazonaws.com/us-east-1_47AghMuTk': user?.signInUserSession.accessToken.jwtToken
+          }
+        });*/
         const username = user?.username;
+        await database.loadData(username);
         setName(username.charAt(0).toUpperCase() + username.slice(1));
       }
       setAuthState(authState);
