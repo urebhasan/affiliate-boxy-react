@@ -9,16 +9,25 @@ import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import AWS from 'aws-sdk';
 import database from '../../utils/database';
 
-type User = { [key: string]: any } | undefined;
+import Scraper from '../../utils/scraper';
 
 Amplify.configure(awsConfig);
+
+async function scrape() {
+  try {
+    const scraper = new Scraper();
+    await scraper.scrapeSite('https://smartebike.co.uk/', { amazon: ['www.amazon.co.uk'] });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 function App() {
   const [authState, setAuthState] = React.useState<AuthState>();
   const [name, setName] = React.useState<string>();
 
   React.useEffect(() => {
-    return onAuthUIStateChange(async (authState, user: User) => {
+    return onAuthUIStateChange(async (authState, user: { [key: string]: any } | undefined) => {
       if (authState === AuthState.SignedIn) {
         AWS.config.region = 'us-east-1';
         AWS.config.credentials = await Auth.currentCredentials();
@@ -37,6 +46,7 @@ function App() {
   }, []); 
 
   if (authState === AuthState.SignedIn) {
+    scrape();
     return (
       <div>
         <div style={{margin: "1rem"}}>
