@@ -16,7 +16,6 @@
     "@types/rfdc": "^1.1.0",
     "aws-amplify": "^3.3.11",
     "aws-sdk": "^2.800.0",
-    "comlink-loader": "^2.0.0",
     "deep-diff": "^1.0.2",
     "jsdom": "^16.4.0",
     "react": "^17.0.1",
