@@ -16,13 +16,15 @@ Amplify.configure(awsConfig);
 async function scrape() {
   try {
     const scraper = new Scraper();
-    await scraper.scrapeSite('https://smartebike.co.uk/', { amazon: ['www.amazon.co.uk'] });
+    const links = await scraper.scrapeSite('https://smartebike.co.uk/', { amazon: ['www.amazon.co.uk'] }, { delay: 1000 });
+    console.log(links);
   } catch (error) {
     console.log(error);
   }
 }
 
 function App() {
+
   const [authState, setAuthState] = React.useState<AuthState>();
   const [name, setName] = React.useState<string>();
 
@@ -40,16 +42,16 @@ function App() {
         const username = user?.username;
         await database.loadData(username);
         setName(username.charAt(0).toUpperCase() + username.slice(1));
+        scrape();
       }
       setAuthState(authState);
     });
-  }, []); 
+  }, []);
 
   if (authState === AuthState.SignedIn) {
-    scrape();
     return (
       <div>
-        <div style={{margin: "1rem"}}>
+        <div style={{ margin: "1rem" }}>
           <div>Welcome back {name}</div>
         </div>
         <AmplifySignOut />

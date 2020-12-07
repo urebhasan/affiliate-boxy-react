@@ -1,14 +1,14 @@
 class Regex {
     getHostname(url: string) {
-        const match = url.match(/(?:http[s]?:\/\/)?([^/]+)/)
+        const match = /(?:https?:\/\/)?([^/]+)/.exec(url);
         if (match) return match[1];
         return '';
     }
 
     getEndpoint(url: string) {
-        let match = url.match(/(?<!https:\/)\/[^/]+$/);
+        let match = /(?<!https:\/)(?<!http:\/)\/[^/]+$/.exec(url);
         if (match) {
-            match = match[0].match(/\/([^?]+)/);
+            match = /\/([^?]+)/.exec(match[0]);
             if (match) return match[1];
         }
         return '';
