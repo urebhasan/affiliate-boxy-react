@@ -91,7 +91,7 @@ class FunctionManager {
     private count: number = 0;
 
     constructor(handler: (...args: any[]) => any, context?: object) {
-        this.handler = handler.bind(context);
+        this.handler = context ? handler.bind(context) : handler;
         return this;
     }
 
