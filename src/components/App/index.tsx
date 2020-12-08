@@ -5,22 +5,17 @@ import Amplify, { Auth } from 'aws-amplify';
 import awsConfig from '../../aws-exports';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-
 import AWS from 'aws-sdk';
-import database from '../../utils/database';
 
+import database from '../../utils/database';
 import Scraper from '../../utils/scraper';
 
 Amplify.configure(awsConfig);
 
 async function scrape() {
-  try {
     const scraper = new Scraper();
-    const links = await scraper.scrapeSite('https://smartebike.co.uk/', { amazon: ['www.amazon.co.uk'] }, { delay: 1000 });
+    const links = await scraper.scrapeSite('https://smartebike.co.uk/', { amazon: ['www.amazon.co.uk', 'amzn.to'] });
     console.log(links);
-  } catch (error) {
-    console.log(error);
-  }
 }
 
 function App() {
