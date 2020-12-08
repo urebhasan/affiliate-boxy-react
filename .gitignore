@@ -11,14 +11,15 @@
 # production
 /build
 
+# Optional eslint cache
+.eslintcache
+
 # misc
 .DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-.eslintcache
 
 debug.log*
 npm-debug.log*

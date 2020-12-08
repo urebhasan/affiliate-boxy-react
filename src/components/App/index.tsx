@@ -5,20 +5,26 @@ import Amplify, { Auth } from 'aws-amplify';
 import awsConfig from '../../aws-exports';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-
 import AWS from 'aws-sdk';
-import database from '../../utils/database';
 
-type User = { [key: string]: any } | undefined;
+import database from '../../utils/database';
+import Scraper from '../../utils/scraper';
 
 Amplify.configure(awsConfig);
 
+async function scrape() {
+    const scraper = new Scraper();
+    const links = await scraper.scrapeSite('https://smartebike.co.uk/', { amazon: ['www.amazon.co.uk', 'amzn.to'] });
+    console.log(links);
+}
+
 function App() {
+
   const [authState, setAuthState] = React.useState<AuthState>();
   const [name, setName] = React.useState<string>();
 
   React.useEffect(() => {
-    return onAuthUIStateChange(async (authState, user: User) => {
+    return onAuthUIStateChange(async (authState, user: { [key: string]: any } | undefined) => {
       if (authState === AuthState.SignedIn) {
         AWS.config.region = 'us-east-1';
         AWS.config.credentials = await Auth.currentCredentials();
@@ -31,15 +37,16 @@ function App() {
         const username = user?.username;
         await database.loadData(username);
         setName(username.charAt(0).toUpperCase() + username.slice(1));
+        scrape();
       }
       setAuthState(authState);
     });
-  }, []); 
+  }, []);
 
   if (authState === AuthState.SignedIn) {
     return (
       <div>
-        <div style={{margin: "1rem"}}>
+        <div style={{ margin: "1rem" }}>
           <div>Welcome back {name}</div>
         </div>
         <AmplifySignOut />
