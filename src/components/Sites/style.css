@@ -1,0 +1,55 @@
+.container { 
+    width: 85rem;
+    margin: auto; 
+    display: flex; 
+    flex: 1;
+    flex-direction: column; 
+    justify-content: center; 
+    padding: 20;
+}
+.todo {  
+    margin-bottom: 15; 
+    background-color: #ffcc80;
+    border-radius: 25px;
+    padding: 5px 10px 5px 10px;
+    margin-top: 10;
+    margin-left: 30;
+    margin-right: 30;
+}
+
+.statuses {
+    float: right;
+    font-size: 18;
+    font-weight: bold
+}
+
+.active {
+    color: #ff0000
+}
+input { 
+    border: none; 
+    background-color: #ddd; 
+    margin-bottom: 10; 
+    padding: 8; 
+    font-size: 18; 
+    width: 40%; 
+    border-radius: 15px 
+}
+.todoName { 
+    font-size: 20; 
+    font-weight: bold 
+}
+
+.todoDescription { 
+    margin-bottom: 0 
+}
+
+button { 
+    background-color: black; 
+    color: white; 
+    outline: none; 
+    font-size: 18; 
+    padding: 12px 0px; 
+    width: 15%; 
+    border-radius: 15px 
+}

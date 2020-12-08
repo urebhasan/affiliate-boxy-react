@@ -10,6 +10,7 @@ import AWS from 'aws-sdk';
 import database from '../../utils/database';
 
 import Scraper from '../../utils/scraper';
+import Sites from '../Sites/sites';
 
 Amplify.configure(awsConfig);
 
@@ -39,6 +40,7 @@ function App() {
         });*/
         const username = user?.username;
         await database.loadData(username);
+        console.log(database.data)
         setName(username.charAt(0).toUpperCase() + username.slice(1));
       }
       setAuthState(authState);
@@ -46,13 +48,14 @@ function App() {
   }, []); 
 
   if (authState === AuthState.SignedIn) {
-    scrape();
+    //scrape();
     return (
       <div>
         <div style={{margin: "1rem"}}>
           <div>Welcome back {name}</div>
         </div>
         <AmplifySignOut />
+        <Sites />
       </div>
     );
   } else {
