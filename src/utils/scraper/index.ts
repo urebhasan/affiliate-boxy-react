@@ -28,7 +28,7 @@ export default class Scraper {
         const pages = new Set([`https://${hostname}/`]);
         const storeLinks: Link[] = [];
         return new Promise((resolve) => {
-            const functionManager = new FunctionManager(this.scrapePage)
+            const functionManager = new FunctionManager(this.scrapePage, this)
                 .then(() => { resolve(storeLinks) })
                 .catch((error) => { if (this.onError) this.onError(error) });
             functionManager.execute(`https://${hostname}/`, hostname, storeDomains, storeLinks, pages, this.request);
@@ -90,8 +90,8 @@ class FunctionManager {
     private onError?: (error: Error) => void;
     private count: number = 0;
 
-    constructor(handler: (...args: any[]) => any) {
-        this.handler = handler;
+    constructor(handler: (...args: any[]) => any, context?: object) {
+        this.handler = handler.bind(context);
         return this;
     }
 
