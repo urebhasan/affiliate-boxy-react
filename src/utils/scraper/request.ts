@@ -41,8 +41,8 @@ export default class Request {
         this.userAgent = userAgent;
         this.hostname = hostname;
         this.proxy = proxy;
-        this.requestAPIURL = 'http://localhost:3000/request';
-        //this.requestAPIURL = requestAPIURL;
+        //this.requestAPIURL = 'http://localhost:3000/request';
+        this.requestAPIURL = requestAPIURL;
 
         this.cookieJar = new CookieJar();
     }
